@@ -33,3 +33,6 @@ Route::get('/signin', function(){
 Route::get('/signup', function(){
     return view('signup');
 })->name('signup');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

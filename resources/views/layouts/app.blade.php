@@ -72,11 +72,20 @@
         </div>
         <div>
             <!-- Logout Button -->
-            <a 
+            <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Sign out
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                </form>
+            <!-- <a 
                 href="/" 
                 class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100">
                 Sign out
-            </a>
+            </a> -->
         </div>
     </div>
 </li>
