@@ -39,19 +39,49 @@
             </div>
         </div>
 
-        <ul class="flex font-light text-[#6B6B6B]">
+        <ul class="flex font-light text-[#6B6B6B] items-center" >
             <li class="mx-2 hover:text-gray-800">
                 <a href="/">About</a>
             </li>
             <li class="mx-2 hover:text-gray-800">
-                <a href="/">Write</a>
+                <a href="/newPost">Write</a>
             </li>
             <li class="mx-2 hover:text-gray-800">
-                <a href="/">Signin</a>
+                <a href="/signin">Signin</a>
             </li>
             <li class="mx-2 hover:text-gray-800">
-                <a href="/">Get Started</a>
+                <a href="/signup">Get Started</a>
             </li>
+            <li class="mx-2 relative">
+    <img 
+        src={{asset('assets/user.png')}} 
+        alt="User Avatar" 
+        width="30px" 
+        height="30px" 
+        class="cursor-pointer" 
+        id="userIcon">
+    
+    <!-- Dropdown Menu -->
+    <div 
+        id="userDropdown" 
+        class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg hidden z-50">
+        <div class="px-4 py-2 text-sm text-gray-700 border-b"> 
+            <!-- User Information -->
+            <p class="font-medium">John Doe</p>
+            <p class="text-xs text-gray-500">johndoe@example.com</p>
+        </div>
+        <div>
+            <!-- Logout Button -->
+            <a 
+                href="/" 
+                class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100">
+                Sign out
+            </a>
+        </div>
+    </div>
+</li>
+
+           
         </ul>
     </nav>
 
@@ -63,8 +93,25 @@
     <!--Footer -->
      <hr>
     <footer class="text-center py-4">
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
+        <p>&copy; 2024 Ganap. All rights reserved.</p>
     </footer>
     
 </body>
+<script>
+    const userIcon = document.getElementById('userIcon');
+    const userDropdown = document.getElementById('userDropdown');
+
+    userIcon.addEventListener('click', () => {
+        // Toggle dropdown visibility
+        userDropdown.classList.toggle('hidden');
+    });
+
+    // Close the dropdown if clicked outside
+    document.addEventListener('click', (event) => {
+        if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
+            userDropdown.classList.add('hidden');
+        }
+    });
+</script>
+
 </html>

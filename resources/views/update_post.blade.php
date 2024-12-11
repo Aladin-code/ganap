@@ -7,10 +7,9 @@
 <section class="flex justify-center">
         <form action="">
           <div class="w-full flex justify-between items-center mb-1 cursor-pointer">
-            <h1 class="font-bold text-xl uppercase">New Post</h1>
+            <h1 class="font-bold text-xl uppercase">Update Post</h1>
             <div class="relative bg-black py-2 px-5 rounded-md">
-              <i class="fa-solid fa-plus bg-black text-white"></i>
-              <input type="submit" value="ADD" class=" text-white ">
+              <input type="submit" value="UPDATE" class=" text-white ">
             </div>
            
           </div>
