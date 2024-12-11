@@ -34,6 +34,10 @@ Route::get('/signup', function(){
     return view('signup');
 })->name('signup');
 
+
 Route::get('/search', function(){
     return view('search');
 })->name('search');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
