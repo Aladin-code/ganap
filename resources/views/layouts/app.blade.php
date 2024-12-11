@@ -29,7 +29,7 @@
     <!-- Navbar -->
     <nav class="flex justify-between items-center py-2 px-8 fixed w-full bg-white border-b-2 shadow-sm z-50">
         <div class="flex items-center h-full">
-            <p class="text-4xl font-bold mr-3">Ganap</p>
+            <a href="/" class="text-4xl font-bold mr-3">Ganap</a>
             <div class="relative px-3">
                 <input 
                     type="text" 
