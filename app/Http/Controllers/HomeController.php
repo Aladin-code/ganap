@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+<<<<<<< Updated upstream
         return view('home');
+=======
+        return view('index');
+>>>>>>> Stashed changes
     }
 }

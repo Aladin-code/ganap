@@ -55,8 +55,8 @@
                 </form>
                 <p class="text-sm mt-2 text-gray-600">Sign in with</p>
                 <div class="flex justify-center items-center w-full mt-2">
-                    <img src={{asset('assets/google.png')}} alt="img" width="45px" class="p-1 border rounded-full mx-2">
-                    <img src={{asset('assets/fb.png')}} alt="img" width="45px"  class="p-1 border rounded-full mx-2">
+                    <a href="{{ url('auth/google') }}"><img src={{asset('assets/google.png')}} alt="img" width="45px" class="p-1 border rounded-full mx-2"></a>
+                    <a href="{{ url('auth/facebook') }}"><img src={{asset('assets/fb.png')}} alt="img" width="45px"  class="p-1 border rounded-full mx-2"></a>
                 </div>
             </div>
             <div class="flex items-center justify-center w-1/2 bg-black flex-col rounded-r-xl">

@@ -5,41 +5,39 @@
 @section('content')
 
 <section class="flex justify-center">
-        <form action="">
+        <form action="{{ route('users.store')}}" method="POST" enctype="multipart/form-data">
+          @csrf
           <div class="w-full flex justify-between items-center mb-1 cursor-pointer">
             <h1 class="font-bold text-xl uppercase">New Post</h1>
             <div class="relative bg-black py-2 px-5 rounded-md">
               <i class="fa-solid fa-plus bg-black text-white"></i>
               <input type="submit" value="ADD" class=" text-white ">
             </div>
-           
           </div>
           <hr>
         <div class="w-full my-3">
           <label for="" class="font-semibold">Featured Image</label><br>
-          <input type="file" name="title" class="w-full border rounded-md p-2 mt-2" >
+          <input type="file" name="img" id="img"class="w-full border rounded-md p-2 mt-2" >
         </div>
         <div class="w-full my-3">
           <label for="" class="font-semibold">Title</label><br>
-          <input type="text" name="title" class="w-full border rounded-md p-2 mt-2" >
+          <input type="text" name="title" id="title"class="w-full border rounded-md p-2 mt-2" >
         </div>
         <div class="w-full my-3">
     <label for="category" class="font-semibold">Category</label><br>
-    <select name="category" class="w-full border rounded-md p-2 mt-2">
-        <option value="" disabled selected>Select a category</option>
-        <option value="category1">Daily Life</option>
-        <option value="category2">Thoughts</option>
-        <option value="category3">Life Experiences</option>
-        <option value="category4">Travel</option>
-        <option value="category5">Creativity and Hobbies</option>
-        <option value="category4">Inspiration and MOtivation</option>
-    </select>
+    <select name="category" id="category" class="w-full border rounded-md p-2 mt-2">
+      <option value="" disabled selected>Select a category</option>
+      @foreach ($categories as $category)
+          <option value="{{ $category->id }}">{{ $category->name }}</option>
+      @endforeach
+  </select>
+
 </div>
 
      
         <div class="w-full my-3">
           <label for="" class="font-semibold">Content</label><br>
-          <textarea name="" id="texteditor" class="mt-2"></textarea>
+          <textarea name="content" id="texteditor" class="mt-2"></textarea>
         </div>
         
         </form>
