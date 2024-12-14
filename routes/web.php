@@ -43,11 +43,11 @@ Route::get('/signup', function(){
 Route::get('/search', function(){
     return view('search');
 })->name('search');
-<<<<<<< Updated upstream
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-=======
+
 
 Auth::routes();
 
@@ -74,4 +74,4 @@ Route::get('/post/{postId}/count', [PostController::class, 'getCounts']);
 Route::get('/get-comments/{postId}', [PostController::class, 'getCommentsByPost']);
 
 Route::get('/hasLike/{postId}/{userId}', [PostController::class, 'hasLike']);
->>>>>>> Stashed changes
+

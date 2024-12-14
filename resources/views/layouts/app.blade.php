@@ -22,8 +22,6 @@
             font-family: "Poppins", sans-serif;
             background-color: white; /* Changed "serif" to "sans-serif" as Poppins is a sans-serif font */
         }
-
-       
     </style>
 </head>
 <body class="bg-[#F9F9F9]"> <!-- Added a default background color -->
@@ -49,62 +47,12 @@
             <li class="mx-2 hover:text-gray-800">
                 <a href="/">About</a>
             </li>
-<<<<<<< Updated upstream
-            <li class="mx-2 hover:text-gray-800">
-                <a href="/newPost">Write</a>
-            </li>
-            <li class="mx-2 hover:text-gray-800">
-                <a href="/signin">Signin</a>
-            </li>
-            <li class="mx-2 hover:text-gray-800">
-                <a href="/signup">Get Started</a>
-            </li>
-            <li class="mx-2 relative">
-    <img 
-        src={{asset('assets/user.png')}} 
-        alt="User Avatar" 
-        width="30px" 
-        height="30px" 
-        class="cursor-pointer" 
-        id="userIcon">
-    
-    <!-- Dropdown Menu -->
-    <div 
-        id="userDropdown" 
-        class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg hidden z-50">
-        <div class="px-4 py-2 text-sm text-gray-700 border-b"> 
-            <!-- User Information -->
-            <p class="font-medium">John Doe</p>
-            <p class="text-xs text-gray-500">johndoe@example.com</p>
-        </div>
-        <div>
-            <!-- Logout Button -->
-            <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Sign out
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                </form>
-            <!-- <a 
-                href="/" 
-                class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100">
-                Sign out
-            </a> -->
-        </div>
-    </div>
-</li>
-
-=======
         
             @if(auth::check() && Auth::user()->role== "admin")
                 <li class="mx-2 hover:text-gray-800">
                      <a href="/newPost">Write</a>
                  </li>
             @endif
->>>>>>> Stashed changes
            
             @if(auth::check())
                
