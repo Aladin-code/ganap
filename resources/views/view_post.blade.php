@@ -5,17 +5,19 @@
 @section('content')
 
 <section class="flex justify-center bg-white">
-    <div class=" max-w-[700px] px-2 mt-7">
+    <div class=" min-w-[700px] max-w-[700px] px-2 mt-7">
         <h1 class="font-bold text-3xl capitalize">{{$post->title}}</h1>
         <input type="hidden" name="post_id" id="post_id" value="{{ $post->id }}">
-        <input type="hidden" name="post_id" id="user_id" value="{{ auth()->user()->id  }}">
+        @if(Auth::check())
+        <input type="hidden" name="post_id" id="user_id" value="{{ auth()->user()->id }}">
+        @endif
         <hr>
-         <!-- Image -->
-         @if($post->featured_image)
+        <!-- Image -->
+        @if($post->featured_image)
         <div class="flex justify-center my-4">
-            <img src="{{ asset('assets/' . $post->featured_image) }}" 
-                 alt="Post Image" 
-                 class="rounded-lg max-h-96 object-cover">
+            <img src="{{ asset('assets/' . $post->featured_image) }}"
+                alt="Post Image"
+                class="rounded-lg max-h-96 object-cover">
         </div>
         @endif
         <hr>
@@ -23,16 +25,32 @@
         <hr>
         <div class="flex w-full items-center  p-2 text-xl mt-[20px]">
             <p class="text-2xl">
+                @if(Auth::check())
                 <button id="like-btn" data-post-id="{{ $post->id }}" data-user-id="{{ auth()->user()->id }}" class="flex items-center ">
                     <i class=" fa-heart mr-3 "></i>
                 </button>
+                @else
+                <a href="{{ route('login') }}" id="like-btn" class="flex items-center">
+                    <i class=" fa-heart mr-3 "></i>
+                </a>
+                @endif
+
             </p>
             <div class="relative flex flex-grow ">
+                @if(Auth::check())
                 <input type="text" class=" bg-none w-full  border border-black focus:outline-none  rounded-3xl py-2 mx-3 text-sm px-5" placeholder="Type your comment here" id="comment">
                 <button id="submitComment" class="absolute top-1 right-8" data-post-id="{{ $post->id }}" data-user-id="{{ auth()->user()->id }}"><i class="fa-solid fa-paper-plane"></i></button>
+                @else
+                <input type="text" class=" bg-none w-full  border border-black focus:outline-none  rounded-3xl py-2 mx-3 text-sm px-5" placeholder="Type your comment here" id="comment">
+                <a href="{{ route('login') }}" id="submitComment" class="absolute top-1 right-8"><i class="fa-solid fa-paper-plane"></i></a>
+                @endif
             </div>
 
-            <p><i class="fa-solid fa-share"></i></p>
+            <p>
+            <i class="fa-solid fa-share cursor-pointer" onclick="copyToClipboard()" title="Copy link"></i>
+            </p>
+            <input type="hidden" id="shareInput" value="{{ url()->current() }}">
+
         </div>
         <p class="px-2 text-sm" id="like-count"></p>
 
@@ -46,12 +64,14 @@
                  <p class="px-2 text-sm my-1"><span class="font-semibold">Paola:</span> You nailed it!</p> -->
     </div>
 </section>
-
 <script>
+    
     $(document).ready(function() {
         fetchComments();
         $('#submitComment').hide();
-        // Handle comment submission
+
+
+        // Comment on post
         $('#submitComment').click(function() {
             let comment = $('#comment').val();
             let postId = $(this).data('post-id');
@@ -82,7 +102,7 @@
                         $('#submitComment').hide();
 
                         // Show success message or dynamically update the comment section
-                        alert(response.message);
+                     
                         fetchComments();
                     } else {
                         alert('Failed to add comment.');
@@ -90,7 +110,7 @@
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX Error:', xhr.responseText);
-                    alert('Error occurred');
+                    // alert('Error occurred');
                 }
             });
         });
@@ -137,8 +157,8 @@
         }
 
     });
-</script>
-<script>
+
+    //like post
     $(document).ready(function() {
         $('#like-btn').click(function() {
             var postId = $(this).data('post-id');
@@ -166,7 +186,7 @@
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX Error:', xhr.responseText);
-                    alert('Error occurred');
+                    // alert('Error occurred');
                 }
             });
         });
@@ -183,7 +203,7 @@
             success: function(response) {
                 if (response.success) {
                     $('#like-count').text(response.likeCount + " Likes");
-                    $('#comment-count').text("Responses (" + response.commentCount + ")"); // Ensure this matches your markup
+                    $('#comment-count').text("Comments (" + response.commentCount + ")"); // Ensure this matches your markup
                 } else {
                     console.log('Error fetching counts:', response);
                 }
@@ -193,8 +213,9 @@
             }
         });
     }
-    hasLiked();
 
+    //check if user already like the post
+    hasLiked();
     function hasLiked() {
         const userId = $('#user_id').val();
         const postId = $('#post_id').val();
@@ -217,11 +238,57 @@
         });
 
     }
+
+    
+
+    function copyToClipboard() {
+    const currentURL = window.location.href;
+    navigator.clipboard.writeText(currentURL)
+        .then(() => {
+            showCopyFeedback(); // Call feedback function
+        })
+        .catch(err => {
+            console.error("Failed to copy: ", err);
+        });
+}
+// Function to show "Copied" feedback
+function showCopyFeedback() {
+    // Create a feedback element
+    const feedback = document.createElement('div');
+    feedback.textContent = "Copied to Clipboard";
+    feedback.style.position = 'fixed';
+    feedback.style.top = '20px'; // Set to the top of the screen
+    feedback.style.left = '50%'; // Center horizontally
+    feedback.style.transform = 'translateX(-50%)'; // Adjust to perfectly center
+    feedback.style.backgroundColor = '#008000';
+    feedback.style.color = '#fff';
+    feedback.style.padding = '10px 20px';
+    feedback.style.borderRadius = '5px';
+    feedback.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.1)';
+    feedback.style.fontSize = '14px';
+    feedback.style.zIndex = '1000';
+    
+
+    // Append feedback to body
+    document.body.appendChild(feedback);
+
+    // Animate in
+    setTimeout(() => {
+        feedback.style.opacity = '1';
+    }, 50);
+
+    // Remove feedback after 2 seconds
+    setTimeout(() => {
+        feedback.style.opacity = '0';
+        setTimeout(() => {
+            feedback.remove();
+        }, 300);
+    }, 2000);
+}
+
+
 </script>
 
-<script>
-
-</script>
 
 
 @endsection

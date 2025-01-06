@@ -24,15 +24,15 @@
         }
     </style>
 </head>
-
 <body>
     <section class="flex justify-center h-screen items-center">
         <div class="w-[1100px] shadow-lg flex h-[500px]  rounded-3xl border relative">
-        <i class="fa-solid fa-arrow-left absolute top-4 left-5 text-xl"></i>
+        <a href="{{ url()->previous() }}">
+            <i class="fa-solid fa-arrow-left absolute top-4 left-5 text-xl"></i>
+        </a>
             <div class="flex flex-col items-center justify-center px-5 w-1/2">
                 <h1 class="text-3xl font-light mb-4 ">Sign in to <span class="font-bold text-4xl">Ganap.</span></h1>
-
-            <form method="POST" action="{{ route('login') }}" class="w-full px-10 mt-5">
+                <form method="POST" action="{{ route('login') }}" class="w-full px-10 mt-5">
                 @csrf
                 <div>
                 <div class="relative mb-3">
@@ -47,7 +47,7 @@
                         <div class="flex justify-center ">
                             <input type="submit" class="font-bold  mt-2 cursor-pointer bg-black mx-auto text-white p-3 rounded-3xl px-12" value="SIGN IN">
                         </div>
-                        </form>
+                        
                     
                     </div>
                     <div class="flex justify-center w-full items-center mt-3">
@@ -56,25 +56,25 @@
                         <div class="border-slate border-t-2 flex-grow"></div>
                     </div>
                    
-                    <p class="text-sm mt-2 text-gray-600">Sign in with</p>
+                </form>
+                <p class="text-sm mt-2 text-gray-600">Sign in with</p>
                 <div class="flex justify-center items-center w-full mt-2">
-                    <img src={{asset('assets/google.png')}} alt="img" width="45px" class="p-1 border rounded-full mx-2">
-                    <img src={{asset('assets/fb.png')}} alt="img" width="45px"  class="p-1 border rounded-full mx-2">
+                    <a href="{{ url('auth/google') }}"><img src={{asset('assets/google.png')}} alt="img" width="45px" class="p-1 border rounded-full mx-2"></a>
+                    <a href="{{ url('auth/facebook') }}"><img src={{asset('assets/fb.png')}} alt="img" width="45px"  class="p-1 border rounded-full mx-2"></a>
                 </div>
             </div>
             <div class="flex items-center justify-center w-1/2 bg-black flex-col rounded-r-xl">
-            <h1 class="text-white text-3xl font-semibold mb-7">New Here?</h1>
-            <p class="text-white text-center mt-4 px-7 w-full mb-7">
-            Join us today to explore inspiring stories,and become a part of our growing community. <br>Sign up now and start your journey!
-            </p>
-            <div class="flex justify-center mt-8">
-                <input type="submit" class="cursor-pointer bg-white text-black p-2 rounded-xl px-9 font-bold" value="SIGN UP">
-            </div>
-             
-        </div>
+    <h1 class="text-white text-3xl font-semibold mb-7">New Here?</h1>
+    <p class="text-white text-center mt-4 px-7 w-full mb-7">
+    Join us today to explore inspiring stories,and become a part of our growing community. <br>Sign up now and start your journey!
+    </p>
+    <div class="flex justify-center mt-8">
+        <a href="{{route('register')}}" class="cursor-pointer bg-white text-black p-2 rounded-xl px-9 font-bold">SIGN UP
+        </a>
+    </div>
+</div>
 
-
-
-
-
-
+       
+    </section>
+</body>
+</html>

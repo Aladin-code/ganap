@@ -26,7 +26,8 @@
 <body>
     <section class="flex justify-center h-screen items-center">
         <div class="w-[1100px] shadow-lg flex h-[500px] rounded-3xl border relative">
-            <i class="fa-solid fa-arrow-left absolute top-4 left-5 text-xl"></i>
+        <a href="{{route('index')}}">
+        <i class="fa-solid fa-arrow-left absolute top-4 left-5 text-xl"></i></a>
             <div class="flex flex-col items-center justify-center px-5 w-1/2">
                 <h1 class="text-3xl font-light mb-4">Sign up to <span class="font-bold text-4xl">Ganap.</span></h1>
                 <form method="POST" action="{{ route('register') }}" class="w-full px-10 mt-5">
@@ -59,7 +60,8 @@
                     Don't miss out on inspiring stories and valuable lessons! If you already have an account, please sign in now.
                 </p>
                 <div class="flex justify-center mt-8">
-                    <input type="submit" class="cursor-pointer bg-white text-black p-2 rounded-xl px-9 font-bold" value="SIGN IN">
+                    <a href="{{route('login')}}" class="cursor-pointer bg-white text-black p-2 rounded-xl px-9 font-bold">SIGN IN
+                    </a>
                 </div>
             </div>
         </div>

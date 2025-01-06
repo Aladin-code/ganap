@@ -29,7 +29,7 @@
             <i class="fa-solid fa-arrow-left absolute top-4 left-5 text-xl"></i>
             <div class="flex flex-col items-center justify-center px-5 w-1/2">
                 <h1 class="text-3xl font-light mb-4">Sign up to <span class="font-bold text-4xl">Ganap.</span></h1>
-                <form action="" class="w-full px-10 mt-5">
+                <form action="{{ route('register') }}" method="POST" class="w-full px-10 mt-5">
                     <div>
                         <div class="relative mb-3">
                             <i class="fa-solid fa-envelope input-icon"></i>

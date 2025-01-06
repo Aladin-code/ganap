@@ -23,12 +23,13 @@ use App\Http\Controllers\FacebookController;
 
 Route::get('/viewPost/{id}', [PostController::class, 'viewPost'])->name('viewPost');
 
-Route::get('/newPost', function () {
-    return view('new_post');
-})->name('newPost');
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
-
-Route::get('/newPost', [PageController::class, 'newPost'])->name('newPost');
+Route::get('/newPost', [PageController::class, 'newPost'])
+    ->name('newPost')
+    ->middleware('admin');
 
 Route::get('/signin', function(){
     return view('signin');
@@ -40,11 +41,9 @@ Route::get('/signup', function(){
 })->name('signup');
 
 
-Route::get('/search', function(){
-    return view('search');
-})->name('search');
 
-Auth::routes();
+
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -53,7 +52,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('users', PostController::class);
+Route::resource('users', PostController::class)->middleware('admin');
+
 
 Route::get('/', [PageController::class,'index'])->name("index");
 // routes/web.php
@@ -74,4 +74,6 @@ Route::get('/post/{postId}/count', [PostController::class, 'getCounts']);
 Route::get('/get-comments/{postId}', [PostController::class, 'getCommentsByPost']);
 
 Route::get('/hasLike/{postId}/{userId}', [PostController::class, 'hasLike']);
+
+Route::get('/search', [PostController::class, 'search'])->name('search');
 

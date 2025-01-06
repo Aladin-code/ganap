@@ -30,20 +30,22 @@
         <i class="fa-solid fa-arrow-left absolute top-4 left-5 text-xl"></i>
             <div class="flex flex-col items-center justify-center px-5 w-1/2">
                 <h1 class="text-3xl font-light mb-4 ">Sign in to <span class="font-bold text-4xl">Ganap.</span></h1>
-                <form action="" class="w-full px-10 mt-5">
-                    <div>
-                    <div class="relative mb-3">
+                <form method="POST" action="{{ route('login') }}" class="w-full px-10 mt-5">
+                @csrf
+                <div>
+                <div class="relative mb-3">
                             <i class="fa-solid fa-envelope input-icon"></i>
-                            <input type="email" class="block w-full border-2 border-black rounded-3xl input-field text-md py-3 bg-gray-50" placeholder="Email" name="">
+                            <input id="email" type="email" class="block w-full border-2 border-black rounded-3xl input-field text-md py-3 bg-gray-50 @error('email') is-invalid @enderror" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                         </div>
                         <div class="relative mb-3">
                             <i class="fa-solid fa-lock input-icon"></i>
-                            <input type="password" class="block w-full border-2 border-black rounded-3xl input-field text-md py-3 bg-gray-50" placeholder="Password" name="">
+                            <input type="password" class="block w-full border-2 border-black rounded-3xl input-field text-md py-3 bg-gray-50" placeholder="Password" name="password" id="password">
                         </div>
                        
                         <div class="flex justify-center ">
                             <input type="submit" class="font-bold  mt-2 cursor-pointer bg-black mx-auto text-white p-3 rounded-3xl px-12" value="SIGN IN">
                         </div>
+                        
                     
                     </div>
                     <div class="flex justify-center w-full items-center mt-3">

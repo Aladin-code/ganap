@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Post;
 class PageController extends Controller
 {
     //
@@ -26,4 +27,8 @@ class PageController extends Controller
         $categories = DB::table('categories')->get();
         return view('new_post', compact('categories'));
     }
+
+   
+    
+    
 }

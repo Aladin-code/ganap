@@ -32,7 +32,8 @@ class GoogleController extends Controller
 
             Auth::login($user);
 
-            return redirect()->intended('/');
+            return redirect()->intended('/')->with('success', 'Signed in successfully! Welcome to Ganap. ');
+
         } catch (\Exception $e) {
             return redirect('/signin')->with('error', 'Unable to login with Google.');
         }

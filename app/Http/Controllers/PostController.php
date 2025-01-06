@@ -102,42 +102,50 @@ class PostController extends Controller
     }
     
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        // dd($request);
-        $post = Post::find($id);
+        // Validate the request
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'category' => 'required|exists:categories,id',
+            'content' => 'required|string',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Find the post by ID
+        $post = Post::findOrFail($id);
+    
+        // Update basic fields
         $post->title = $request->title;
         $post->category_id = $request->category;
         $post->content = $request->content;
-
-        // if ($request->hasFile('featured_image')) {
-        //     // Store the new image and update the post's image field
-        //     $path = $request->file('featured_image')->store('assets', 'public');
-        //     $post->featured_image = $path;
-        // }
-
+    
+        // Handle file upload if present
         if ($request->hasFile('featured_image')) {
+            // Delete the old image if it exists
+            if ($post->featured_image && file_exists(public_path('assets/' . $post->featured_image))) {
+                unlink(public_path('assets/' . $post->featured_image));
+            }
+    
+            // Save the new image
             $img = $request->file('featured_image');
             $featured_img = time() . '.' . $img->getClientOriginalExtension();
             $img->move(public_path('assets'), $featured_img);
             $post->featured_image = $featured_img;
         }
-
+    
+        // Save the updated post
         $post->save();
-        return redirect()->route('index');
+    
+        // Redirect with success message
+        return redirect()->route('index')->with('success', 'Post updated successfully!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(string $id)
     {
         $post = Post::find($id)->delete();
         // $msg = ['success',' Student Record is Deleted ' ];
-        return redirect()->back();
+        return redirect()->route('index')->with('success', 'Post deleted successfully!');
     }
 
     public function viewPost($id)
@@ -261,6 +269,22 @@ class PostController extends Controller
                 }
         }
         
+        public function search(Request $request) {
+            $keyword = $request->input('query');  // Get the search keyword from the request
+        
+            // Validate if the keyword exists
+            if (empty($keyword)) {
+                return response()->json(['message' => 'No search keyword provided'], 400);
+            }
+        
+            // Use Eloquent's query builder with proper search logic
+            $results = Post::where('title', 'LIKE', '%' . $keyword . '%')
+                          ->orWhere('content', 'LIKE', '%' . $keyword . '%')
+                          ->get();
+        
+            // Return the results as JSON
+            return response()->json($results);
+        }
         
 
     }     

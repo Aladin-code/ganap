@@ -5,13 +5,13 @@
 @section('content')
 
 <section class="flex justify-center">
-  <form method="POST" action="{{ route('users.update', $post->id) }}" enctype="multipart/form-data">
+  <form method="POST" action="{{ route('users.update', $post->id) }}" id="updateForm" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="w-full flex justify-between items-center mb-1 cursor-pointer">
       <h1 class="font-bold text-xl uppercase">Update Post</h1>
       <div class="relative bg-black py-2 px-5 rounded-md">
-        <input type="submit" value="UPDATE" class=" text-white ">
+        <input type="button" id="updateButton" value="UPDATE" class="text-white cursor-pointer">
       </div>
     </div>
     <hr>
@@ -57,6 +57,27 @@
     toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | code | fontselect fontsizeselect | bullist numlist | link image | forecolor backcolor | formatselect',
     plugins: 'advlist autolink link image lists charmap print preview anchor searchreplace visualblocks code fullscreen',
   });
+
+  document.getElementById('updateButton').addEventListener('click', function (e) {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      customClass: {
+            confirmButton: 'bg-black text-white px-4 py-2 rounded',
+            cancelButton: 'bg-gray-300 text-black px-4 py-2 rounded'
+        }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If confirmed, submit the form
+        document.getElementById('updateForm').submit();
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  });
+
+
 </script>
 
 @endsection

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Exception;  // Add this line
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -11,25 +11,26 @@ class FacebookController extends Controller
     //
     public function redirectToFacebook()
         {
-            
-            return Socialite::driver('facebook')->redirect();
-            
+            return Socialite::driver('facebook')
+            ->redirect();
+    
         }
 
         public function handleFacebookCallback()
         {
-            // dd('hello');
+            // dd("ayaw");  
             try {
                 // $user = Socialite::driver('facebook')->stateless()->user();
                 $user = Socialite::driver('facebook')->user();
-        
+
+               
                 // Handle the user data (e.g., store in the database, login user, etc.)
                 $findUser = User::where('email', $user->email)->first();
         
                 if ($findUser) {
                     Auth::login($findUser);
         
-                    return redirect('/');
+                    return redirect()->intended('/')->with('success', 'Signed in successfully! Welcome to Ganap. ');;
                 } else {
                     $newUser = User::create([
                         'name' => $user->name,
@@ -40,7 +41,7 @@ class FacebookController extends Controller
         
                     Auth::login($newUser);
         
-                    return redirect('/');
+                      return redirect()->intended('/')->with('success', 'Signed in successfully! Welcome to Ganap. ');
                 }
             } catch (Exception $e) {
                 return redirect('/signin')->with('error', 'Unable to login using Facebook. Please try again.');
